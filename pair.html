@@ -1,7 +1,7 @@
 <!DOCTYPE html><html lang="en"><head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>𝐐𝐔𝐄𝐄𝐍-𝐑𝐔𝐁𝐘 𝐏𝐀𝐈𝐑</title>
+  <title>KAYA MD PAIR</title>
   <link rel="stylesheet" href="css/all.min.css">
   <style>
     body {
@@ -169,11 +169,11 @@
         <div id="text">
           <i class="fa fa-user"></i>
           <p>
-            <h2 class="centered-text"> 𝐐𝐔𝐄𝐄𝐍 𝐑𝐔𝐁𝐘 𝐏𝐀𝐈𝐑 𝐕𝐟 🇫🇷</h2>           
-            <h6> 𝐄𝐧𝐭𝐫𝐞 𝐯𝐨𝐭𝐫𝐞 𝐧𝐮𝐧𝐞𝐫𝐨 𝐬𝐚𝐧𝐬 ( + ).</h6>
+            <h2 class="centered-text"> KAYA-MD PAIR</h2>           
+            <h6>Enter your number with country code.</h6>
             <div class="input-container">
-              <input placeholder="241XXXXXXX" type="number" id="number" placeholder="𝐄𝐧𝐭𝐫𝐞 𝐥𝐞 𝐧𝐮𝐦𝐞𝐫𝐨 𝐝𝐞 𝐯𝐨𝐭𝐫𝐞 𝐩𝐚𝐲𝐬 𝐩𝐨𝐮𝐫 𝐚𝐯𝐨𝐢𝐫 𝐥𝐞 𝐜𝐨𝐝𝐞..." name="">
-              <button id="submit">𝐆𝐞𝐧𝐞𝐫𝐞</button>
+              <input placeholder="243XXXXXXX" type="number" id="number" placeholder="Enter your phone number with country code" name="">
+              <button id="submit">enter</button>
             </div>
            
             <a id="waiting-message" class="centered-text" style="display: none;">in process...</a>
@@ -184,7 +184,7 @@
         </div>
       </div>
     </div>
-    <div class="glowing-text">𝐏𝐨𝐰𝐞𝐫 𝐛𝐲 𝐃𝐞𝐯 𝐀𝐬𝐤 & 𝐊𝐚𝐲𝐚</div>
+    <div class="glowing-text">Powered by KAYA & AQUA KAYA</div>
   </div>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.0.0-alpha.1/axios.min.js"></script>
   <script>
@@ -196,7 +196,7 @@
     async function Copy() {
       let text = document.getElementById("copy").innerText;
       let obj = document.getElementById("copy");
-      await navigator.clipboard.writeText(obj.innerText.replace('𝐕𝐎𝐓𝐑𝐄 𝐂𝐎𝐃𝐄 : ', ''));
+      await navigator.clipboard.writeText(obj.innerText.replace('CODE: ', ''));
       obj.innerText = "COPIED";
       obj.style = "color:blue;font-weight:bold";
       obj.size = "5";
@@ -210,9 +210,9 @@
     b.addEventListener("click", async (e) => {
       e.preventDefault();
       if (!c.value) {
-        a.innerHTML = '<a style="color:black;font-weight:bold">❗𝐄𝐧𝐭𝐫𝐞 𝐋𝐞 𝐍𝐮𝐦𝐞𝐫𝐨 𝐖𝐡𝐚𝐭𝐬𝐚𝐩𝐩 𝐏𝐨𝐮𝐫 𝐀𝐯𝐨𝐢𝐫 𝐋𝐞 𝐂𝐨𝐝𝐞.</a><br><br>';
+        a.innerHTML = '<a style="color:black;font-weight:bold">❗Enter your whatsapp number with country code.</a><br><br>';
       } else if (c.value.replace(/[^0-9]/g, "").length < 11) {
-        a.innerHTML = '<a style="color:black;font-weight:bold">❌𝐍𝐮𝐦𝐞𝐫𝐨 𝐢𝐧𝐯𝐚𝐥𝐢𝐝𝐞❌</a><br><br>';
+        a.innerHTML = '<a style="color:black;font-weight:bold">❌Invalid number format❌</a><br><br>';
       } else {
         const bc = c.value.replace(/[^0-9]/g, "");
         let bb = "";
@@ -234,7 +234,7 @@
         a.innerHTML = '<a style="color:black;font-weight:bold">Please wait </a><br><br>';
         let { data } = await axios(`/code?number=${bc}`);
         let code = data.code || "Service Unavailable";
-        a.innerHTML = '<font id="copy" onclick="Copy()" style="color:red;font-weight:bold" size="5"> 𝐕𝐎𝐓𝐑𝐄 𝐂𝐎𝐃𝐄: <span style="color:black;font-weight:bold">' + code + '</span></font><br><br><br>';
+        a.innerHTML = '<font id="copy" onclick="Copy()" style="color:red;font-weight:bold" size="5">CODE: <span style="color:black;font-weight:bold">' + code + '</span></font><br><br><br>';
       }
     });
   </script>

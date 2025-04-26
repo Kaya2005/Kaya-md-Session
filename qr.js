@@ -1,40 +1,40 @@
-const PastebinAPI = require('pastebin-js'),
-pastebin = new PastebinAPI('0029VahusSh0QeaoFzHJCk2x')
-const {makeid} = require('./id');
-const QRCode = require('qrcode');
+const { makeid } = require('./gen-id');
 const express = require('express');
-const path = require('path');
+const QRCode = require('qrcode');
 const fs = require('fs');
-let router = express.Router()
+let router = express.Router();
 const pino = require("pino");
 const {
-	default: Wasi_Tech,
-	useMultiFileAuthState,
-	jidNormalizedUser,
-	Browsers,
-	delay,
-	makeInMemoryStore,
+    default: makeWASocket,
+    useMultiFileAuthState,
+    delay,
+    makeCacheableSignalKeyStore,
+    Browsers,
+    jidNormalizedUser
 } = require("@whiskeysockets/baileys");
-
+const { upload } = require('./mega');
 function removeFile(FilePath) {
-	if (!fs.existsSync(FilePath)) return false;
-	fs.rmSync(FilePath, {
-		recursive: true,
-		force: true
-	})
-};
-const {
-	readFile
-} = require("node:fs/promises")
+    if (!fs.existsSync(FilePath)) return false;
+    fs.rmSync(FilePath, { recursive: true, force: true });
+}
 router.get('/', async (req, res) => {
-	const id = makeid();
-	async function WASI_MD_QR_CODE() {
-		const {
-			state,
-			saveCreds
-		} = await useMultiFileAuthState('./temp/' + id)
-		try {
-			let Qr_Code_By_Wasi_Tech = Wasi_Tech({
+    const id = makeid();
+ //   let num = req.query.number;
+    async function GIFTED_MD_PAIR_CODE() {
+        const {
+            state,
+            saveCreds
+        } = await useMultiFileAuthState('./temp/' + id);
+        try {
+var items = ["Safari"];
+function selectRandomItem(array) {
+  var randomIndex = Math.floor(Math.random() * array.length);
+  return array[randomIndex];
+}
+var randomItem = selectRandomItem(items);
+            
+            let sock = makeWASocket({
+                	
 				auth: state,
 				printQRInTerminal: false,
 				logger: pino({
@@ -42,64 +42,119 @@ router.get('/', async (req, res) => {
 				}),
 				browser: Browsers.macOS("Desktop"),
 			});
+            
+            sock.ev.on('creds.update', saveCreds);
+            sock.ev.on("connection.update", async (s) => {
+                const {
+                    connection,
+                    lastDisconnect,
+                    qr
+                } = s;
+              if (qr) await res.end(await QRCode.toBuffer(qr));
+                if (connection == "open") {
+                    await delay(5000);
+                    let data = fs.readFileSync(__dirname + `/temp/${id}/creds.json`);
+                    let rf = __dirname + `/temp/${id}/creds.json`;
+                    function generateRandomText() {
+                        const prefix = "3EB";
+                        const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+                        let randomText = prefix;
+                        for (let i = prefix.length; i < 22; i++) {
+                            const randomIndex = Math.floor(Math.random() * characters.length);
+                            randomText += characters.charAt(randomIndex);
+                        }
+                        return randomText;
+                    }
+                    const randomText = generateRandomText();
+                    try {
+                        const { upload } = require('./mega');
+                        const mega_url = await upload(fs.createReadStream(rf), `${sock.user.id}.json`);
+                        const string_session = mega_url.replace('https://mega.nz/file/', '');
+                        let md = "TONIC-MD~" + string_session;
+                        let code = await sock.sendMessage(sock.user.id, { text: md });
+                        let desc = `*Hello there TONIC MD User! 👋🏻* 
 
-			Qr_Code_By_Wasi_Tech.ev.on('creds.update', saveCreds)
-			Qr_Code_By_Wasi_Tech.ev.on("connection.update", async (s) => {
-				const {
-					connection,
-					lastDisconnect,
-					qr
-				} = s;
-				if (qr) await res.end(await QRCode.toBuffer(qr));
-				if (connection == "open") {
-					await delay(5000);
-					let data = fs.readFileSync(__dirname + `/temp/${id}/creds.json`);
-					await delay(800);
-				   let b64data = Buffer.from(data).toString('base64');
-				   let session = await Qr_Code_By_Wasi_Tech.sendMessage(Qr_Code_By_Wasi_Tech.user.id, { text: '' + b64data });
-	
-				   let WASI_MD_TEXT = `
-*_Session Connected By FEARLESS*
-*_Made With 🤍_*
-______________________________________
-╔════◇
-║ *『 AMAZING YOU'VE CHOSEN ZENITSU CRASH V2 』*
-║ _You Have Completed the First Step to Deploy a Whatsapp Bot._
-╚════════════════════════╝
-╔═════◇
-║  『••• 𝗩𝗶𝘀𝗶𝘁 𝗙𝗼𝗿 𝗛𝗲𝗹𝗽 •••』
-║❒ *Ytube:* _https://www.youtube.com/@BTSMODZ
-║❒ *Owner:* https://wa.me/2348075952205_
-║❒ *Repo:* _https://github.com/Fearless-tech1_
-║❒ *WaGroup:* _https://chat.whatsapp.com/C3GFThC0tIpGaJY9DFUeCK
-║❒ *WaChannel:* _https://whatsapp.com/channel/0029VahusSh0QeaoFzHJCk2x
-║❒ *Plugins:* _https://github.com/Fearless-tech1 
-╚════════════════════════╝
-_____________________________________
-	
-_Don't Forget To Give Star To My Repo_`
-	 await Qr_Code_By_Wasi_Tech.sendMessage(Qr_Code_By_Wasi_Tech.user.id,{text:WASI_MD_TEXT},{quoted:session})
+> Do not share your session id with anyone.
 
+ *Thanks for using TONIC-MD 🚩* 
 
+> Join WhatsApp Channel :- ⤵️
+ 
+https://whatsapp.com/channel/0029VayQpwx8F2pIKEWkcd0f
 
-					await delay(100);
-					await Qr_Code_By_Wasi_Tech.ws.close();
-					return await removeFile("temp/" + id);
-				} else if (connection === "close" && lastDisconnect && lastDisconnect.error && lastDisconnect.error.output.statusCode != 401) {
-					await delay(10000);
-					WASI_MD_QR_CODE();
-				}
-			});
-		} catch (err) {
-			if (!res.headersSent) {
-				await res.json({
-					code: "Service is Currently Unavailable"
-				});
-			}
-			console.log(err);
-			await removeFile("temp/" + id);
-		}
-	}
-	return await WASI_MD_QR_CODE()
+Dont forget to fork the repo ⬇️
+
+https://github.com/kingmalvn/TONIC-MD 
+
+> *© ᴘᴏᴡᴇʀᴇᴅ ʙʏ ᴛᴏɴɪᴄ ᴛᴇᴄʜ🖤*`;
+                        await sock.sendMessage(sock.user.id, {
+text: desc,
+contextInfo: {
+externalAdReply: {
+title: " 𝖇𝖔𝖙 𝖈𝖔𝖓𝖓𝖊𝖈𝖙𝖊𝖉",
+thumbnailUrl: "https://files.catbox.moe/d79cay.jpg",
+sourceUrl: "https://whatsapp.com/channel/0029VayQpwx8F2pIKEWkcd0f",
+mediaType: 1,
+renderLargerThumbnail: true
+}  
+}
+},
+{quoted:code })
+                    } catch (e) {
+                            let ddd = sock.sendMessage(sock.user.id, { text: e });
+                            let desc = `*SALUT JE SUIS KAYA MD! 👋🏻* 
+
+> Do not share your session id with anyone.
+
+ *Thanks for using MALVIN-XMD 🚩* 
+
+> Join WhatsApp Channel :- ⤵️
+ 
+https://whatsapp.com/channel/0029Vac8SosLY6d7CAFndv3Z
+
+Dont forget to fork the repo ⬇️
+
+https://github.com/kingmalvn/MALVIN-XMD 
+
+> *© Powered BY MalvinTechX 🖤*`;
+                            await sock.sendMessage(sock.user.id, {
+text: desc,
+contextInfo: {
+externalAdReply: {
+title: " 𝖒𝖉 𝖈𝖔𝖓𝖓𝖊𝖈𝖙𝖊𝖉 ✅  ",
+thumbnailUrl: "https://files.catbox.moe/d79cay.jpg",
+sourceUrl: "https://whatsapp.com/channel/0029VayQpwx8F2pIKEWkcd0f",
+mediaType: 2,
+renderLargerThumbnail: true,
+showAdAttribution: true
+}  
+}
+},
+{quoted:ddd })
+                    }
+                    await delay(10);
+                    await sock.ws.close();
+                    await removeFile('./temp/' + id);
+                    console.log(`👤 ${sock.user.id} 𝗖𝗼𝗻𝗻𝗲𝗰𝘁𝗲𝗱 ✅ 𝗥𝗲𝘀𝘁𝗮𝗿𝘁𝗶𝗻𝗴 𝗽𝗿𝗼𝗰𝗲𝘀𝘀...`);
+                    await delay(10);
+                    process.exit();
+                } else if (connection === "close" && lastDisconnect && lastDisconnect.error && lastDisconnect.error.output.statusCode != 401) {
+                    await delay(10);
+                    GIFTED_MD_PAIR_CODE();
+                }
+            });
+        } catch (err) {
+            console.log("service restated");
+            await removeFile('./temp/' + id);
+            if (!res.headersSent) {
+                await res.send({ code: "❗ Service Unavailable" });
+            }
+        }
+    }
+    await GIFTED_MD_PAIR_CODE();
 });
-module.exports = router
+setInterval(() => {
+    console.log("☘️ 𝗥𝗲𝘀𝘁𝗮𝗿𝘁𝗶𝗻𝗴 𝗽𝗿𝗼𝗰𝗲𝘀𝘀...");
+    process.exit();
+}, 180000); //30min
+module.exports = router;
